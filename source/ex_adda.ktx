@@ -1,0 +1,264 @@
+<q1
+Interest calculations with functions
+
+Improve the script for interest calculations with functions.
+	
+* A function 'typed_input' should request the user input.
+The function shall take the prompt as argument and
+also the expected input type (e.g. int.float,string).
+The function shall display the prompt, read the user input
+and transform the input into the specified type.
+The result of the transformation shall be returned.
+
+* A function  'main' shall use the function 'typed_input' 
+to request the initial balance and the interest rate(as float), 
+the number of years (as int). The calculation of the
+balance after n years shall be done in a function 'calculate'.
+A function 'output' shall display the data (in and out) of
+a calculation.
+
+* Extend the function  'main' with a loop so that the inputs
+for several calculations could be repeated as often as needed.
+(break if 0 is given for the number of years)
+	
+* The inputs and the calculated results shall be stored in a list.
+A function 'table_output' shall show a formatted output 
+of this list 
+
+<h1
+
+<a1
+def typed_input(prompt,ret_type):
+    in_str = input(prompt)
+    return ret_type(in_str)
+prompt_kap = "Initial capital? "
+prompt_interest = "Interes trate? "
+prompt_years = "Number of years? "    
+
+def main():
+    res_lst = []
+    while True:
+        years = typed_input(prompt_years,int)
+        if years == 0:
+            break
+        kap = typed_input(prompt_kap,float)
+        interest = typed_input(prompt_interest,float)
+        res = calculate(kap, interest, years)
+        res_lst.append((kap, interest, years,res)) #interest per line questionable
+        output(kap, interest, years, res)
+    table_output(res_lst)   
+
+def calculate(kap, interest, years):
+    res = kap * (1+interest/100)**years
+    return res
+
+fmt = '%10.2f %7.2f %4d %15.2f'
+
+def output(kap, interest, years, res):
+    print(fmt%(kap, interest, years, res))
+    return   
+
+def table_output(res_lst):
+    for i in res_lst:
+        print(fmt%i)
+    return        
+
+if __name__ == '__main__':
+    main()
+    
+
+
+<q2
+Refactor  the script for interest rate calculation into
+a module 'interest_rates_fu_mod' with the functions
+' typed_input, calculate, table_output' and into a main script 
+'interest_rates_fu_import.py', which imports the module 
+'interest_rates_fu_mod'.
+
+<h2
+
+<a2
+# interest_rates_fu_import.py
+from interest_rates_fu_mod import  typed_input, calculate, table_output
+
+def main():
+    res_list=[]
+    while True:
+        kapital = typed_input("Initial capital? ",float)
+        zins = typed_input("Interest rate? ",float)
+        laufzeit = typed_input("Years? ",int)
+        if laufzeit == 0:
+            break
+        endkapital = calculate(kapital,zins,laufzeit)
+        res_list.append((kapital,zins,laufzeit,endkapital))
+    table_output(res_list)
+
+main()    
+
+# interest_rates_fu_mod
+def typed_input(prompt,ret_type):
+    in_str = input(prompt)
+    return ret_type(in_str)
+prompt_kap = "Initial capital? "
+prompt_interest = "Interes trate? "
+prompt_years = "Number of years? "    
+
+def calculate(kap, interest, years):
+    res = kap * (1+interest/100)**years
+    return res
+
+fmt = '%10.2f %7.2f %4d %15.2f'
+
+def output(kap, interest, years, res):
+    print(fmt%(kap, interest, years, res))
+    return   
+
+def table_output(res_lst):
+    for i in res_lst:
+        print(fmt%i)
+    return        
+
+<q3
+Improve the script for interest rate calculation
+with exception handling/exception generation.
+
+'typed_input' should contain a loop with break ONLY 
+of input conversion was OK
+
+The function 'calculate' shall raise an exception, 
+if initial capital <= 0 or number of years < 0.
+
+Possible exceptions shall be handled:
+ in 'typed_input' (invalid type argument, just int, float or str allowed)
+ in 'main' (exceptions in calls of  'typed_input' or 'calculate')
+
+
+<h3
+
+<a3
+import sys
+
+def typed_input(prompt,ret_type):
+    allowed_types=[int,float,str]
+    if ret_type not in allowed_types:
+        raise Exception('type not allowed, seen: %s, allowed are: %s' \
+                        % (str(ret_type),str(allowed_types)))
+    while True:
+        in_str = input(prompt)
+        try:
+            res = ret_type(in_str)
+            break
+        except:
+            print('typed_input failed')
+    return res
+
+def main():
+    prompt_years="Enter non-negative years (0 for end)"
+    prompt_kap = "Initial capital? "
+    prompt_interest = "Interest rate? "
+
+    try:
+        years = typed_input(prompt_years,int)
+    except Exception as err:
+        print(err)
+        sys.exit(1)
+    except Exception as err:
+        print(err)
+        sys.exit(1)
+    try:
+        kap = typed_input(prompt_kap,float)
+    except Exception as err:
+        print(err)
+        sys.exit(1)
+    try:
+        interest = typed_input(prompt_interest,float)
+    except Exception as err:
+        print(err)
+        sys.exit(1)
+    try:
+        res = calculate(kap, interest, years)
+    except Exception as err:
+        print(err)
+        sys.exit(1)
+    print(output(kap, interest, years, res))
+
+
+def main1():
+    typed_input_exc_msg = "typed_input call failed" 
+    calculate_exc_msg = "calculate call failed"
+    prompt_years="Enter non-negative years (0 for end)"
+    prompt_kap = "Initial capital? "
+    prompt_interest = "Interest rate? "
+
+    res_lst = []
+    while True:
+        try:
+            years = typed_input(prompt_years,int)
+        except:
+            print(typed_input_exc_msg)
+            continue
+        if years == 0:
+            break
+        try:    
+            kap = typed_input(prompt_kap,float)
+        except:
+            print(typed_input_exc_msg)
+            continue
+        try:
+            interest = typed_input(prompt_interest,float)
+        except:
+            print(typed_input_exc_msg)
+            continue
+        try:
+            res = calculate(kap, interest, years)
+        except:
+            print(calculate_exc_msg)
+            continue
+        res_lst.append((kap, interest, years,res)) #interest per line questionable
+        output(kap, interest, years, res)
+    table_output(res_lst)   
+
+def calculate(kap, interest, years):
+    negativ_value_msg = "Negative values are not allowed"
+    if kap < 0 or years < 0:
+        raise Exception(negativ_value_msg)
+    res = kap * (1+interest/100)**years
+    return res
+
+def output(kap, interest, years, res):
+    fmt = '%10.2f %7.2f %4d %15.2f'
+    return fmt%(kap, interest, years, res)
+    
+def table_output(res_lst):
+    fmt = '%10.2f %7.2f %4d %15.2f'
+    for i in res_lst:
+        kap, interest, years, res = i #unpack tuple
+        print(fmt%(kap, interest, years, res))
+    return        
+
+if __name__ == '__main__':
+    main()
+#    main1()
+
+<q4
+Testing of interest rates calculation
+
+Write `pytest` tests for the modularized interest rates calculation
+
+<h4
+
+<a4
+# TODO
+
+<q5
+
+<h5
+
+<a5
+
+<q6
+
+<h6
+
+<a6
+

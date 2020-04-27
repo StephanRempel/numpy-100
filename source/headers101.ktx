@@ -1,0 +1,25 @@
+< header
+# 101 exercises
+
+This is a collection of basic exercises. 
+
+The goal of this collection is to offer a quick reference for both old
+and new users but also to provide a set of exercises for those who teach.
+
+
+Based on work of Nicolas P. Rougier <https://github.com/rougier/numpy-100>.
+
+
+< sub_header
+File automatically generated. See the documentation to update questions/answers/hints programmatically.
+
+
+< jupyter_instruction
+Run the `initialize.py` module, then for each question you can query the
+answer or an hint with `hint(n)` or `answer(n)` for `n` question number.
+
+
+< jupyter_instruction_rand
+Run the `initialize.py` module, then call a random question with `pick()` an hint towards its solution with
+`hint(n)` and the answer with `answer(n)`, where n is the number of the picked question.
+
