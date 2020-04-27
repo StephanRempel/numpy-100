@@ -2,6 +2,13 @@ import os
 import nbformat as nbf
 import mdutils
 
+class Cfg:
+    source_dir ='source'
+    header_file = 'headers.ktx'
+    exercises_file = 'exercises100.ktx'
+    destination_file ='100_Numpy_exercises'
+    destination_nb_file ='100_Numpy_exercises.ipynb'
+    detination_random_file = '100_Numpy_random.ipynb'
 
 def ktx_to_dict(input_file, keystarter='<'):
     """ parsing keyed text to a python dictionary. """
@@ -32,11 +39,11 @@ def dict_to_ktx(input_dict, output_file, keystarter='<'):
             f.write(f'{val}\n\n')
 
 
-HEADERS = ktx_to_dict(os.path.join('source', 'headers.ktx'))
-QHA = ktx_to_dict(os.path.join('source', 'exercises100.ktx'))
+HEADERS = ktx_to_dict(os.path.join(Cfg.source_dir, Cfg.header_file))
+QHA = ktx_to_dict(os.path.join(Cfg.source_dir, Cfg.exercises_file))
 
 
-def create_jupyter_notebook(destination_filename='100_Numpy_exercises.ipynb'):
+def create_jupyter_notebook(destination_filename=Cfg.destination_nb_file):
     """ Programmatically create jupyter notebook with the questions (and hints and solutions if required)
     saved under source files """
 
@@ -66,7 +73,7 @@ def create_jupyter_notebook(destination_filename='100_Numpy_exercises.ipynb'):
     nbf.write(nb, destination_filename)
 
 
-def create_jupyter_notebook_random_question(destination_filename='100_Numpy_random.ipynb'):
+def create_jupyter_notebook_random_question(destination_filename=Cfg.detination_random_file):
     """ Programmatically create jupyter notebook with the questions (and hints and solutions if required)
     saved under source files """
 
@@ -92,7 +99,7 @@ def create_jupyter_notebook_random_question(destination_filename='100_Numpy_rand
     nbf.write(nb, destination_filename)
 
 
-def create_markdown(destination_filename='100_Numpy_exercises', with_hints=False, with_solutions=False):
+def create_markdown(destination_filename=Cfg.destination_file, with_hints=False, with_solutions=False):
     # Create file name
     if with_hints:
         destination_filename += '_with_hints'
