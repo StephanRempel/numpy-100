@@ -2,13 +2,21 @@ import os
 import nbformat as nbf
 import mdutils
 
+# class Cfg:
+#     source_dir ='source'
+#     header_file = 'headers.ktx'
+#     exercises_file = 'exercises100.ktx'
+#     destination_file ='100_Numpy_exercises'
+#     destination_nb_file ='100_Numpy_exercises.ipynb'
+#     detination_random_file = '100_Numpy_random.ipynb'
+
 class Cfg:
     source_dir ='source'
-    header_file = 'headers.ktx'
-    exercises_file = 'exercises100.ktx'
-    destination_file ='100_Numpy_exercises'
-    destination_nb_file ='100_Numpy_exercises.ipynb'
-    detination_random_file = '100_Numpy_random.ipynb'
+    header_file = 'headers101.ktx'
+    exercises_file = 'exercises101.ktx'
+    destination_file ='101_exercises'
+    destination_nb_file ='101_exercises.ipynb'
+    detination_random_file = '101_random.ipynb'
 
 def ktx_to_dict(input_file, keystarter='<'):
     """ parsing keyed text to a python dictionary. """
