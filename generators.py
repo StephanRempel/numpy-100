@@ -11,12 +11,13 @@ import mdutils
 #     detination_random_file = '100_Numpy_random.ipynb'
 
 class Cfg:
-    source_dir ='source'
-    header_file = 'headers101.ktx'
-    exercises_file = 'exercises101.ktx'
-    destination_file ='101_exercises'
-    destination_nb_file ='101_exercises.ipynb'
-    detination_random_file = '101_random.ipynb'
+    source_dir ='source_en'
+    destination_dir = 'destination'
+    header_file = 'headers.ktx'
+    exercises_file = 'exercises.ktx'
+    destination_file ='exercises_en'
+    destination_nb_file ='exercises_en.ipynb'
+    destination_random_file = 'random_en.ipynb'
 
 def ktx_to_dict(input_file, keystarter='<'):
     """ parsing keyed text to a python dictionary. """
@@ -51,7 +52,7 @@ HEADERS = ktx_to_dict(os.path.join(Cfg.source_dir, Cfg.header_file))
 QHA = ktx_to_dict(os.path.join(Cfg.source_dir, Cfg.exercises_file))
 
 
-def create_jupyter_notebook(destination_filename=Cfg.destination_nb_file):
+def create_jupyter_notebook(destination_filename=os.path.join(Cfg.destination_dir, Cfg.destination_nb_file)):
     """ Programmatically create jupyter notebook with the questions (and hints and solutions if required)
     saved under source files """
 
@@ -70,8 +71,10 @@ def create_jupyter_notebook(destination_filename=Cfg.destination_nb_file):
 
     # - Add questions and empty spaces for answers
     for n in range(1, 101):
-        nb['cells'].append(nbf.v4.new_markdown_cell(f'#### {n}. ' + QHA[f'q{n}']))
-        nb['cells'].append(nbf.v4.new_code_cell(""))
+        question = QHA[f'q{n}']
+        if question.strip() == '':continue #skip, if no question text
+        nb['cells'].append(nbf.v4.new_markdown_cell(f'#### {n}. ' + question))
+        nb['cells'].append(nbf.v4.new_code_cell("# your code here"))
 
     # Delete file if one with the same name is found
     if os.path.exists(destination_filename):
@@ -81,7 +84,7 @@ def create_jupyter_notebook(destination_filename=Cfg.destination_nb_file):
     nbf.write(nb, destination_filename)
 
 
-def create_jupyter_notebook_random_question(destination_filename=Cfg.detination_random_file):
+def create_jupyter_notebook_random_question(destination_filename=os.path.join(Cfg.destination_dir,Cfg.destination_random_file)):
     """ Programmatically create jupyter notebook with the questions (and hints and solutions if required)
     saved under source files """
 
@@ -107,7 +110,7 @@ def create_jupyter_notebook_random_question(destination_filename=Cfg.detination_
     nbf.write(nb, destination_filename)
 
 
-def create_markdown(destination_filename=Cfg.destination_file, with_hints=False, with_solutions=False):
+def create_markdown(destination_filename=os.path.join(Cfg.destination_dir, Cfg.destination_file), with_hints=False, with_solutions=False):
     # Create file name
     if with_hints:
         destination_filename += '_with_hints'
@@ -123,7 +126,9 @@ def create_markdown(destination_filename=Cfg.destination_file, with_hints=False,
 
     # Add questions (and hint or answers if required)
     for n in range(1, 101):
-        mdfile.new_header(title=f"{n}. {QHA[f'q{n}']}", level=4)
+        question = QHA[f'q{n}']
+        if question.strip() == '':continue #skip, if no question text
+        mdfile.new_header(title=f"{n}. {question}", level=4)
         if with_hints:
             mdfile.write(f"`{QHA[f'h{n}']}`")
         if with_solutions:

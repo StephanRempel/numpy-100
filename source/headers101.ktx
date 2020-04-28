@@ -1,13 +1,9 @@
 < header
-# 101 exercises
+# bodenseo Basic Exercises
 
-This is a collection of basic exercises. 
+This is a collection of basic exercises from the bodenseo Python Tutorial site. 
 
-The goal of this collection is to offer a quick reference for both old
-and new users but also to provide a set of exercises for those who teach.
-
-
-Based on work of Nicolas P. Rougier <https://github.com/rougier/numpy-100>.
+The generation of Jupyter notebooks and markdown files is based on work of Nicolas P. Rougier <https://github.com/rougier/numpy-100>.
 
 
 < sub_header

@@ -65,24 +65,40 @@ Write a program, which asks for the initial balance K0 and for the interest rate
 The program shall calculate the new capital K1 after one year including the interest.
 
 Extend the program with a while-loop, so that the capital Kn after a period of n years can be calculated.
+Simplify the calculation using the formula `k = k0*(1+p/100)**n`.
+Extend the program with a while-loop, so that input (capital, interest rate, years) , the calculation and the output
+is repeated (until capital input is negativ).
 
 < h3
 hint: 
 
 
 < a3
-K = float(input("Starting capital? "))
+k0 = float(input("Starting capital? "))
 p = float(input("Interest rate? "))
 n = int(input("Number of years? "))
-# python2: raw_input instead of input
 
 i = 0
+''' 
+#calculation witj while loop
+k=k0
 while i < n:
-    K +=  K * p / 100.0
-    # or K *=  1 +  p / 100.0
+    k +=  k * p / 100.0
+    # or k *=  1 +  p / 100.0
     i += 1
     print(i)
-print("Capital after " + str(n) + " ys: " + str(K))
+'''
+k = k0*(1+p/100)**n
+print("Capital after " + str(n) + " ys: " + str(k))
+
+# with repeated input
+while True:
+    k0 = float(input("Starting capital? "))
+    if k0 < 0: break
+    p = float(input("Interest rate? "))
+    n = int(input("Number of years? "))
+    k = k0*(1+p/100)**n
+    print(k0,p,n,k)
 
 < q4
 Population growth
