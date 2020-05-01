@@ -20,6 +20,22 @@ class Cfg:
     destination_nb_file ='exercises_en.ipynb'
     destination_random_file = 'random_en.ipynb'
 
+def question(n):
+    print(f'{n}. ' + ge.QHA[f'q{n}'])
+
+
+def hint(n):
+    print(ge.QHA[f'h{n}'])
+
+
+def answer(n):
+    print(ge.QHA[f'a{n}'])
+
+
+def pick():
+    n = np.random.randint(1, 100)
+    question(n)
+
 def ktx_to_dict(input_file, keystarter='<'):
     """ parsing keyed text to a python dictionary. """
     answer = dict()
@@ -65,10 +81,10 @@ def create_jupyter_notebook(destination_filename=os.path.join(Cfg.destination_di
     # - Add header:
     nb['cells'].append(nbf.v4.new_markdown_cell(HEADERS["header"]))
     nb['cells'].append(nbf.v4.new_markdown_cell(HEADERS["sub_header"]))
-    nb['cells'].append(nbf.v4.new_markdown_cell(HEADERS["jupyter_instruction"]))
+#    nb['cells'].append(nbf.v4.new_markdown_cell(HEADERS["jupyter_instruction"]))
 
     # - Add initialisation
-    nb['cells'].append(nbf.v4.new_code_cell('%run initialise.py'))
+#    nb['cells'].append(nbf.v4.new_code_cell('%run initialise.py'))
 
     # - Add questions and empty spaces for answers
     for n in range(1, 101):
@@ -97,11 +113,11 @@ def create_jupyter_notebook_random_question(destination_filename=os.path.join(Cf
     # - Add header:
     nb['cells'].append(nbf.v4.new_markdown_cell(HEADERS["header"]))
     nb['cells'].append(nbf.v4.new_markdown_cell(HEADERS["sub_header"]))
-    nb['cells'].append(nbf.v4.new_markdown_cell(HEADERS["jupyter_instruction_rand"]))
+#    nb['cells'].append(nbf.v4.new_markdown_cell(HEADERS["jupyter_instruction_rand"]))
 
     # - Add initialisation
-    nb['cells'].append(nbf.v4.new_code_cell('%run initialise.py'))
-    nb['cells'].append(nbf.v4.new_code_cell("pick()"))
+#    nb['cells'].append(nbf.v4.new_code_cell('%run initialise.py'))
+#    nb['cells'].append(nbf.v4.new_code_cell("pick()"))
 
     # Delete file if one with the same name is found
     if os.path.exists(destination_filename):
@@ -152,8 +168,8 @@ def create_rst(destination_filename, with_ints=False, with_answers=False):
 if __name__ == '__main__':
     Path(Cfg.destination_dir).mkdir(parents=True, exist_ok=True)
     create_jupyter_notebook()
-    create_jupyter_notebook_random_question()
-    create_markdown()
+#    create_jupyter_notebook_random_question()
+#    create_markdown()
     create_markdown(with_hints=False, with_solutions=True)
-    create_markdown(with_hints=True, with_solutions=False)
-    create_markdown(with_hints=True, with_solutions=True)
+#    create_markdown(with_hints=True, with_solutions=False)
+#    create_markdown(with_hints=True, with_solutions=True)
