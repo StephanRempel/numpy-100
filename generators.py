@@ -1,7 +1,8 @@
 import os
 import nbformat as nbf
 import mdutils
-
+from pathlib import Path
+#%%
 # class Cfg:
 #     source_dir ='source'
 #     header_file = 'headers.ktx'
@@ -149,6 +150,7 @@ def create_rst(destination_filename, with_ints=False, with_answers=False):
 
 
 if __name__ == '__main__':
+    Path(Cfg.destination_dir).mkdir(parents=True, exist_ok=True)
     create_jupyter_notebook()
     create_jupyter_notebook_random_question()
     create_markdown()
